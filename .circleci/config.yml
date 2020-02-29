@@ -18,28 +18,28 @@ jobs:
           name: Run Unit Tests
           command: |
             echo 'running pytest'
-  build_push_image:
-    docker:
-      - image: circleci/python:3.7.4
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: false
-      - run:
-          name: Build and Push Docker image to Docker Hub
-          command: |
-            echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV
-            echo 'export TAG=${CIRCLE_SHA1}' >> $BASH_ENV
-            echo 'export IMAGE_NAME=hwth-snyk' >> $BASH_ENV && source $BASH_ENV
-            pip install --user -r requirements.txt
-            pyinstaller -F hello_world.py
-            docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
-            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
-            docker push $DOCKER_LOGIN/$IMAGE_NAME
+  #build_push_image:
+  #  docker:
+  #    - image: circleci/python:3.7.4
+  #  steps:
+  #    - checkout
+  #    - setup_remote_docker:
+  #        docker_layer_caching: false
+  #    - run:
+  #        name: Build and Push Docker image to Docker Hub
+  #        command: |
+  #          echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV
+  #          echo 'export TAG=${CIRCLE_SHA1}' >> $BASH_ENV
+  #          echo 'export IMAGE_NAME=hwth-snyk' >> $BASH_ENV && source $BASH_ENV
+  #          pip install --user -r requirements.txt
+  #          pyinstaller -F hello_world.py
+  #          docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
+  #          echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+  #          docker push $DOCKER_LOGIN/$IMAGE_NAME
 workflows:
   build_test_deploy:
     jobs:
       - build_test
-      - build_push_image:
-          requires:
-            - build_test
+      #- build_push_image:
+      #    requires:
+      #      - build_test
