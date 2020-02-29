@@ -1,7 +1,7 @@
 version: 2.1
 #add below to scan
-orbs:
-  snyk: snyk/snyk@0.0.8
+#orbs:
+#  snyk: snyk/snyk@0.0.8
 #add above to scan
 jobs:
   build_test:
@@ -14,7 +14,9 @@ jobs:
           command: |
             echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV && source $BASH_ENV
             pip install --user -r requirements.txt
-      - snyk/scan
+      #add below to scan
+      #- snyk/scan
+      #add above to scan
       - run:
           name: Run Unit Tests
           command: |
