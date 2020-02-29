@@ -1,4 +1,8 @@
 version: 2.1
+#add below to scan
+orbs:
+  snyk: snyk/snyk@0.0.8
+#add above to scan
 jobs:
   build_test:
     docker:
@@ -29,7 +33,7 @@ jobs:
             echo 'export IMAGE_NAME=hwth-snyk' >> $BASH_ENV && source $BASH_ENV
             pip install --user -r requirements.txt
             pyinstaller -F hello_world.py
-            docker build -t $DOCKER_LOGIN/$IMAGE_NAME . -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
+            docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
             echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
             docker push $DOCKER_LOGIN/$IMAGE_NAME
 workflows:
