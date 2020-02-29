@@ -26,7 +26,7 @@ jobs:
           command: |
             echo 'export PATH=~$PATH:~/.local/bin' >> $BASH_ENV
             echo 'export TAG=${CIRCLE_SHA1}' >> $BASH_ENV
-            echo 'export IMAGE_NAME=Dockerfile' >> $BASH_ENV && source $BASH_ENV
+            echo 'export IMAGE_NAME=hwth-synk' >> $BASH_ENV && source $BASH_ENV
             pip install --user -r requirements.txt
             pyinstaller -F hello_world.py
             docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
